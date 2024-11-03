@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedAppForUser } from "./lib/firebase/server";
+import { cookies } from "next/headers";
 
 const protectedRoutesWhenNotAuthenticated = ["/new-post"];
 const protectedRoutesWhenAuthenticated = ["/join"];
@@ -23,16 +23,17 @@ export async function middleware(request: NextRequest) {
   if (!allProtectedRoutes.some((route) => route === pathname))
     NextResponse.next();
 
-  const { currentUser } = await getAuthenticatedAppForUser();
+  const cookiesStore = await cookies();
+  const optimisticSession = cookiesStore.get("session");
 
   if (
-    currentUser &&
+    optimisticSession &&
     protectedRoutesWhenAuthenticated.some((route) => route === pathname)
   )
     return NextResponse.redirect(new URL("/", request.nextUrl));
 
   if (
-    !currentUser &&
+    !optimisticSession &&
     protectedRoutesWhenNotAuthenticated.some((route) => route === pathname)
   )
     return NextResponse.redirect(new URL("/join", request.nextUrl));
