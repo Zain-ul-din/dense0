@@ -1,11 +1,10 @@
 "use client";
 import { firebase } from "@/lib/firebase";
-import { serverSideSignIn, serverSideSignOut } from "@/lib/firebase/server";
+import { serverSideSignIn } from "@/lib/firebase/server";
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
-  signOut,
   User
 } from "firebase/auth";
 import { ReactNode, useEffect, useState } from "react";
@@ -18,11 +17,7 @@ const providers = {
 
 interface SignInProps {
   provider: keyof typeof providers;
-  children: (
-    login: () => void,
-    state: AuthStateHook,
-    signOutFunc: () => Promise<void>
-  ) => ReactNode;
+  children: (login: () => void, state: AuthStateHook) => ReactNode;
   onLogin?: (user: User) => void;
 }
 
@@ -50,16 +45,7 @@ const SignIn = ({ children, provider, onLogin }: SignInProps) => {
     })();
   }, [user, onLogin, provider]);
 
-  const signOutFunc = async () => {
-    setLoading(true);
-    await signOut(firebase.auth);
-    await serverSideSignOut();
-    setLoading(false);
-  };
-
-  return (
-    <>{children(signIn, [user, loadingUser || loading, error], signOutFunc)}</>
-  );
+  return <>{children(signIn, [user, loadingUser || loading, error])}</>;
 };
 
 export default SignIn;

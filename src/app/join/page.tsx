@@ -1,5 +1,6 @@
 "use client";
 import SignIn from "@/components/signin";
+import SignOut from "@/components/signout";
 
 export default function JoinPage() {
   return (
@@ -24,6 +25,10 @@ export default function JoinPage() {
           );
         }}
       </SignIn>
+      <br></br>
+      <SignOut>
+        {(signOut) => <button onClick={signOut}>SignOut</button>}
+      </SignOut>
     </>
   );
 }
