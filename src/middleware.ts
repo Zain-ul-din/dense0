@@ -7,13 +7,6 @@ const protectedRoutesWhenAuthenticated = ["/join"];
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/api") ||
-    pathname.startsWith("/images")
-  )
-    return NextResponse.next();
-
   const allProtectedRoutes = [
     ...protectedRoutesWhenAuthenticated,
     ...protectedRoutesWhenNotAuthenticated
@@ -37,3 +30,7 @@ export async function middleware(request: NextRequest) {
   // for safety
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"]
+};
