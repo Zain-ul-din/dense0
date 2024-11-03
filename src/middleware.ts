@@ -20,21 +20,17 @@ export async function middleware(request: NextRequest) {
   ];
 
   // to make non-protected routes blazingly fast
-  if (!allProtectedRoutes.some((route) => route === pathname))
-    NextResponse.next();
+  if (!allProtectedRoutes.includes(pathname)) NextResponse.next();
 
   const cookiesStore = await cookies();
   const optimisticSession = cookiesStore.get("session");
 
-  if (
-    optimisticSession &&
-    protectedRoutesWhenAuthenticated.some((route) => route === pathname)
-  )
+  if (optimisticSession && protectedRoutesWhenAuthenticated.includes(pathname))
     return NextResponse.redirect(new URL("/", request.nextUrl));
 
   if (
     !optimisticSession &&
-    protectedRoutesWhenNotAuthenticated.some((route) => route === pathname)
+    protectedRoutesWhenNotAuthenticated.includes(pathname)
   )
     return NextResponse.redirect(new URL("/join", request.nextUrl));
 
