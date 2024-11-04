@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.1",
+    "@vercel/blob": "^0.25.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "firebase": "^11.0.1",
@@ -28,6 +29,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
