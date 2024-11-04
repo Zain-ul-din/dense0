@@ -1,6 +1,7 @@
 import {
   TiptapImage,
   TiptapLink,
+  // UpdatedImage,
   TaskList,
   TaskItem,
   HorizontalRule,
