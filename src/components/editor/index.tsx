@@ -28,7 +28,7 @@ const Editor = () => {
   return (
     <EditorRoot>
       <EditorContent
-        className="bg-white prose min-w-[100vw]"
+        className="bg-white prose min-w-[100%] rounded-lg border"
         immediatelyRender={false}
         extensions={extensions}
         editorProps={{
@@ -36,7 +36,7 @@ const Editor = () => {
             // keydown: (_view, event) => handleCommandNavigation(event),
           },
           attributes: {
-            class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`
+            class: `prose prose-lg  dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`
           }
         }}
       >
