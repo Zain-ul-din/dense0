@@ -16,9 +16,9 @@ const SignOut = ({ children }: SignOutProps) => {
 
   const signOutFunc = async () => {
     setLoading(true);
-    await signOut(firebase.auth);
-    await serverSideSignOut();
-    setLoading(false);
+    Promise.all([signOut(firebase.auth), serverSideSignOut()]).finally(() => {
+      setLoading(false);
+    });
   };
 
   return <>{children(signOutFunc, [user, loadingUser || loading, error])}</>;
