@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import Header from "@/components/header";
 
 const uncutSans = localFont({
   src: "./fonts/UncutSans.woff2",
@@ -19,8 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${uncutSans.variable} antialiased`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${uncutSans.variable} antialiased`}>
+        <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
+          <Header />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
