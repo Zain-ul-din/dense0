@@ -12,9 +12,22 @@ const Page = () => {
 
   return (
     <>
-      <main>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          const form = new FormData(e.target as HTMLFormElement);
+          console.log(Object.fromEntries(form.entries()));
+        }}
+      >
         <Section>
           <Container className="space-y-6">
+            {/* form inputs */}
+            <input
+              name="topics"
+              value={tags.map((t) => t.text).join(",")}
+              hidden
+              readOnly
+            />
             <Editor />
             <TagInput
               placeholder="Enter a topic"
@@ -36,13 +49,19 @@ const Page = () => {
               // enableAutocomplete
             />
 
-            <Button size={"lg"} variant={"outline"} className="text-xl">
+            <Button
+              size={"lg"}
+              variant={"outline"}
+              className="text-xl"
+              type="submit"
+            >
               Publish
             </Button>
           </Container>
         </Section>
-      </main>
+      </form>
     </>
   );
 };
+
 export default Page;

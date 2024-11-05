@@ -8,7 +8,8 @@ import {
   EditorCommandItem,
   EditorCommandList,
   EditorContent,
-  EditorRoot
+  EditorRoot,
+  JSONContent
 } from "novel";
 import { slashCommand, suggestionItems } from "./slash-commands";
 import { NodeSelector } from "./selectors/node-selector";
@@ -19,6 +20,7 @@ import { useState } from "react";
 
 const Editor = () => {
   const extensions = [...defaultExtensions, slashCommand];
+  const [content, setContent] = useState<JSONContent | undefined>(undefined);
 
   const [openNode, setOpenNode] = useState<boolean>(false);
   const [openColor, setOpenColor] = useState<boolean>(false);
@@ -31,6 +33,11 @@ const Editor = () => {
         className="bg-transparent prose min-w-[100%] rounded-lg border"
         immediatelyRender={false}
         extensions={extensions}
+        initialContent={content}
+        onUpdate={({ editor }) => {
+          const json = editor.getJSON();
+          setContent(json);
+        }}
         editorProps={{
           handleDOMEvents: {
             // keydown: (_view, event) => handleCommandNavigation(event),
@@ -39,6 +46,7 @@ const Editor = () => {
             class: `prose prose-lg  dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`
           }
         }}
+        editable
       >
         <EditorCommand className="z-50 h-auto max-h-[330px]  w-72 overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
           <EditorCommandEmpty className="px-2 text-muted-foreground">
