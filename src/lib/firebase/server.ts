@@ -25,6 +25,6 @@ async function initAuthenticatedAppForUser(idToken?: string) {
 export const getAuthenticatedAppForUser = cache(async (idToken?: string) => {
   const cookiesStore = await cookies();
   const token = cookiesStore.get("session");
-  const _idToken = token?.value;
-  return initAuthenticatedAppForUser(idToken || _idToken);
+  const _idToken = idToken ?? token?.value;
+  return initAuthenticatedAppForUser(_idToken);
 });

@@ -16,11 +16,16 @@ import { NodeSelector } from "./selectors/node-selector";
 import { LinkSelector } from "./selectors/link-selector";
 import { TextButtons } from "./selectors/text-buttons";
 import { ColorSelector } from "./selectors/color-selector";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-const Editor = () => {
+const Editor = ({
+  content,
+  setContent
+}: {
+  content: JSONContent | undefined;
+  setContent: Dispatch<SetStateAction<JSONContent | undefined>>;
+}) => {
   const extensions = [...defaultExtensions, slashCommand];
-  const [content, setContent] = useState<JSONContent | undefined>(undefined);
 
   const [openNode, setOpenNode] = useState<boolean>(false);
   const [openColor, setOpenColor] = useState<boolean>(false);
