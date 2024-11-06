@@ -17,3 +17,9 @@ export const getLatestPosts = async () => {
   const posts = await snapShot.toArray();
   return posts as any as Post[];
 };
+
+export const getPostById = async (id: string) => {
+  const db = await connectMongoDB();
+  const post = await db.collection(postsCol).findOne({ _id: id as any });
+  return post as any as Post;
+};
