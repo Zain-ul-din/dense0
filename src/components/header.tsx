@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { ThemeToggle } from "./misc/theme-toggle";
 import { Button } from "./ui/button";
 import { Pencil } from "lucide-react";
 import { ROUTES } from "@/lib/constants";
+import SignOut from "./signout";
 
 export default function Header() {
   return (
@@ -19,6 +22,9 @@ export default function Header() {
             </Button>
           </Link>
           <ThemeToggle />
+          <SignOut>
+            {(signOut) => <Button onClick={signOut}>Sign out</Button>}
+          </SignOut>
         </nav>
       </div>
     </header>

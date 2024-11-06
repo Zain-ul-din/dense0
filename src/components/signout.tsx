@@ -1,7 +1,7 @@
 "use client";
 
+import { signOutServerSide } from "@/lib/auth";
 import { firebase } from "@/lib/firebase";
-import { serverSideSignOut } from "@/lib/firebase/server";
 import { signOut } from "firebase/auth";
 import { ReactNode, useState } from "react";
 import { AuthStateHook, useAuthState } from "react-firebase-hooks/auth";
@@ -16,7 +16,7 @@ const SignOut = ({ children }: SignOutProps) => {
 
   const signOutFunc = async () => {
     setLoading(true);
-    Promise.all([signOut(firebase.auth), serverSideSignOut()]).finally(() => {
+    Promise.all([signOut(firebase.auth), signOutServerSide()]).finally(() => {
       setLoading(false);
     });
   };

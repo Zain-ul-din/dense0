@@ -1,6 +1,6 @@
 "use client";
+import { signInServerSide } from "@/lib/auth";
 import { firebase } from "@/lib/firebase";
-import { serverSideSignIn } from "@/lib/firebase/server";
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -24,6 +24,7 @@ interface SignInProps {
 const SignIn = ({ children, provider, onLogin }: SignInProps) => {
   const [user, loadingUser, error] = useAuthState(firebase.auth);
   const [loading, setLoading] = useState<boolean>(false);
+  // const [pending, startTransition] = useTransition();
 
   const signIn = () => {
     signInWithPopup(firebase.auth, providers[provider]);
@@ -39,7 +40,7 @@ const SignIn = ({ children, provider, onLogin }: SignInProps) => {
     (async () => {
       setLoading(true);
       const tokenId = await user?.getIdToken();
-      await serverSideSignIn(tokenId);
+      await signInServerSide(tokenId);
       if (onLogin) onLogin(user);
       setLoading(false);
     })();
