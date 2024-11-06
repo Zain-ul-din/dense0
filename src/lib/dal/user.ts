@@ -2,6 +2,8 @@
 
 import { connectMongoDB } from "../db";
 import { User } from "firebase/auth";
+import urlSlug from "url-slug";
+import { v4 as v4uuid } from "uuid";
 
 const usersCol = "users";
 
@@ -12,21 +14,17 @@ export const getUserById = async ({ userId }: { userId: string }) => {
 };
 
 export const insertUser = async ({ user }: { user: Partial<User> }) => {
-  try {
-    const db = await connectMongoDB();
+  const db = await connectMongoDB();
+  const slug = urlSlug(user.displayName || v4uuid());
 
-    const data = await db.collection(usersCol).insertOne({
-      _id: user.uid as any,
-      ...user,
-      name: user.displayName?.toLowerCase()
-    });
-    return data.acknowledged;
-  } catch (err: any) {
-    console.log(err);
-    // user already exists
-    if (err.code === 11000) {
-      return true;
-    }
-    return false;
-  }
+  const isExists = (await db.collection(usersCol).findOne({ slug })) != null;
+
+  const data = await db.collection(usersCol).insertOne({
+    _id: user.uid as any,
+    ...user,
+    name: user.displayName?.toLowerCase(),
+    slug: isExists ? `${slug}-${v4uuid()}` : slug
+  });
+
+  return data.acknowledged;
 };
