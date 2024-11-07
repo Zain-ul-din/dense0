@@ -10,16 +10,38 @@ export const createPost = async (post: Post) => {
 
 export const getLatestPosts = async () => {
   const db = await connectMongoDB();
-  const snapShot = db
+  const posts = await db
     .collection(postsCol)
-    .find({}, { projection: { _id: 1, topics: 1, userId: 1 } })
-    .limit(20);
-  const posts = await snapShot.toArray();
+    .aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          topics: 1,
+          userId: 1,
+          user: {
+            _id: 1,
+            uid: 1,
+            displayName: 1,
+            photoURL: 1
+          }
+        }
+      },
+      { $limit: 20 }
+    ])
+    .toArray();
   return posts as any as Post[];
 };
 
-export const getPostById = async (id: string) => {
+export const getPostById = async (id: string): Promise<Post | null> => {
   const db = await connectMongoDB();
   const post = await db.collection(postsCol).findOne({ _id: id as any });
-  return post as any as Post;
+  return post as Post | null;
 };

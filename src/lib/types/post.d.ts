@@ -8,6 +8,12 @@ type Post = {
   heading: string;
   createdAt: string;
   updatedAt: string;
+  user?: {
+    _id: string;
+    uid: string;
+    displayName: string;
+    photoURL: string;
+  }[];
 };
 
 export default Post;

@@ -31,7 +31,7 @@ export default async function Page({
     <Section>
       <Container>
         <div
-          className="prose dark:prose-invert max-w-screen-lg mx-auto"
+          className="prose md:prose-lg dark:prose-pre:bg-transparent dark:prose-pre:border dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-screen-lg mx-auto"
           dangerouslySetInnerHTML={{
             __html: generateHTML(JSON.parse(post.json as any as string), [
               Bold,
