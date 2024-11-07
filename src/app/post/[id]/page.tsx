@@ -11,6 +11,7 @@ import ListItem from "@tiptap/extension-list-item";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import { Container, Section } from "@/components/craft";
+import StarterKit from "@tiptap/starter-kit";
 
 export const dynamicParams = true;
 
@@ -40,7 +41,8 @@ export default async function Page({
               Link,
               Paragraph,
               ListItem,
-              Text
+              Text,
+              StarterKit
             ])
           }}
         />

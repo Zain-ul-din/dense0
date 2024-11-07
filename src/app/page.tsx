@@ -1,19 +1,37 @@
+import { Container, Section } from "@/components/craft";
 import { getLatestPosts } from "@/lib/dal/post";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
   const posts = await getLatestPosts();
   return (
-    <>
-      <ul>
-        {posts.map((post, idx) => {
-          return (
-            <li key={idx}>
-              <Link href={`/post/${post._id}`}>{post._id}</Link>
-            </li>
-          );
-        })}
-      </ul>
-    </>
+    <Section>
+      <Container className="max-w-screen-xl mx-auto sm:px-2 lg:px-0 grid grid-cols-10">
+        <ul className="!min-w-full  flex flex-col gap-4 col-span-7">
+          {posts.map((post, idx) => {
+            return (
+              <li
+                key={idx}
+                className="bg-accent w-full text-2xl font-medium border rounded-md p-4 py-6"
+              >
+                <Link href={`/post/${post._id}`} className="no-underline">
+                  <div className="flex gap-4">
+                    <Image
+                      src="/images/cat.webp"
+                      alt="cat image"
+                      width={200}
+                      height={200}
+                      className="object-cover"
+                    />
+                    <h2>{post._id}</h2>
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </Container>
+    </Section>
   );
 }

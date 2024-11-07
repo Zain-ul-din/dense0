@@ -1,8 +1,11 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { createPost } from "../dal/post";
 import { PostFormSchema } from "../definitions";
 import { getAuthenticatedAppForUser } from "../firebase/server";
+import urlSlug from "url-slug";
+import { customAlphabet } from "nanoid";
 
 type FormState =
   | {
@@ -38,10 +41,18 @@ export async function createPostAction(state: FormState, formData: FormData) {
     .join(" ")
     .trim();
 
+  const nanoId = customAlphabet("qwertyuiopa1234567890sdfghjklzxcvbnm", 12);
+  const slug = urlSlug(`${heading} ${nanoId()}`);
+
   await createPost({
     topics: data.topics.split(",").map((v) => v.trim()),
-    _id: heading,
+    _id: slug,
     json: data.json as any,
-    userId: currentUser.uid
+    heading: heading,
+    userId: currentUser.uid,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   });
+
+  redirect(`/post/${slug}`);
 }

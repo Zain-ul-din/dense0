@@ -5,6 +5,9 @@ type Post = {
   topics: string[];
   userId: string;
   _id: string;
+  heading: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export default Post;

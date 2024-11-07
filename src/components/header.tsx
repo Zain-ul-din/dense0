@@ -9,10 +9,10 @@ import SignOut from "./signout";
 
 export default function Header() {
   return (
-    <header className="px-4 py-6 border-b">
+    <header className="px-4 py-4 border-b">
       <div className="max-w-screen-xl flex items-center mx-auto">
         <Link href={ROUTES.home}>
-          <h2 className="font-mono text-2xl">DENSE0</h2>
+          <h2 className="font-mono text-2xl font-bold">DENSE0</h2>
         </Link>
         <nav className="flex-1 flex justify-end gap-2">
           <Link href={ROUTES.new_post}>
