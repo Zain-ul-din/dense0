@@ -1,7 +1,7 @@
 import {
   TiptapImage,
   TiptapLink,
-  // UpdatedImage,
+  UpdatedImage,
   TaskList,
   TaskItem,
   HorizontalRule,
@@ -10,6 +10,7 @@ import {
 } from "novel/extensions";
 
 import { cx } from "class-variance-authority";
+import { UploadImagesPlugin } from "novel/plugins";
 
 // TODO I am using cx here to get tailwind autocomplete working, idk if someone else can write a regex to just capture the class key in objects
 
@@ -81,12 +82,43 @@ const starterKit = StarterKit.configure({
   gapcursor: false
 });
 
+const tiptapLink = TiptapLink.configure({
+  HTMLAttributes: {
+    class: cx(
+      "text-muted-foreground underline underline-offset-[3px] hover:text-primary transition-colors cursor-pointer"
+    )
+  }
+});
+
+const updatedImage = UpdatedImage.configure({
+  HTMLAttributes: {
+    class: cx("rounded-lg border border-muted")
+  }
+});
+
+const tiptapImage = TiptapImage.extend({
+  addProseMirrorPlugins() {
+    return [
+      UploadImagesPlugin({
+        imageClass: cx(
+          "opacity-40 rounded-lg border border-red border-stone-200"
+        )
+      })
+    ];
+  }
+}).configure({
+  allowBase64: true,
+  HTMLAttributes: {
+    class: cx("rounded-lg border border-muted")
+  }
+});
+
 export const defaultExtensions = [
   starterKit,
   placeholder,
-  TiptapLink,
-  TiptapImage,
-  // updatedImage,
+  tiptapLink,
+  tiptapImage,
+  updatedImage,
   taskList,
   taskItem,
   horizontalRule

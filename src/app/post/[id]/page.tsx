@@ -12,6 +12,7 @@ import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import { Container, Section } from "@/components/craft";
 import StarterKit from "@tiptap/starter-kit";
+import TiptapImage from "@tiptap/extension-image";
 
 export const dynamicParams = true;
 
@@ -31,7 +32,7 @@ export default async function Page({
     <Section>
       <Container>
         <div
-          className="prose md:prose-lg dark:prose-pre:bg-transparent dark:prose-pre:border dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-screen-lg mx-auto"
+          className="prose md:prose-lg prose-img:w-full prose-img:object-cover prose-img:object-bottom prose-img:rounded-sm dark:prose-pre:bg-transparent dark:prose-pre:border dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-[950px] mx-auto"
           dangerouslySetInnerHTML={{
             __html: generateHTML(JSON.parse(post.json as any as string), [
               Bold,
@@ -42,7 +43,8 @@ export default async function Page({
               Paragraph,
               ListItem,
               Text,
-              StarterKit
+              StarterKit,
+              TiptapImage
             ])
           }}
         />

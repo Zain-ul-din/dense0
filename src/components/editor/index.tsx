@@ -11,12 +11,15 @@ import {
   EditorRoot,
   JSONContent
 } from "novel";
+import { handleCommandNavigation } from "novel/extensions";
 import { slashCommand, suggestionItems } from "./slash-commands";
 import { NodeSelector } from "./selectors/node-selector";
 import { LinkSelector } from "./selectors/link-selector";
 import { TextButtons } from "./selectors/text-buttons";
 import { ColorSelector } from "./selectors/color-selector";
 import { Dispatch, SetStateAction, useState } from "react";
+import { handleImageDrop, handleImagePaste } from "novel/plugins";
+import { uploadFn } from "./image-upload";
 
 const Editor = ({
   content,
@@ -45,8 +48,11 @@ const Editor = ({
         }}
         editorProps={{
           handleDOMEvents: {
-            // keydown: (_view, event) => handleCommandNavigation(event),
+            keydown: (_view, event) => handleCommandNavigation(event)
           },
+          handlePaste: (view, event) => handleImagePaste(view, event, uploadFn),
+          handleDrop: (view: any, event: any, _slice: any, moved: boolean) =>
+            handleImageDrop(view, event, moved, uploadFn),
           attributes: {
             class: `prose prose-lg  dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`
           }
