@@ -8,7 +8,7 @@ export default function JoinPage() {
   return (
     <Main className="h-[100svh] flex flex-col justify-center">
       <Section className="my-auto">
-        <Container className="text-center max-w-3xl border bg-white rounded-lg">
+        <Container className="text-center max-w-3xl border bg-card rounded-lg">
           <h1>Join Dense0</h1>
           <p>An Open Source blogging site.</p>
           <div className="mt-6 sm:mt-8 space-y-4">

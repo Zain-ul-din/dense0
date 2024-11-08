@@ -1,53 +1,38 @@
 import { Container, Section } from "@/components/craft";
+import Posts from "@/components/posts";
+import { Button } from "@/components/ui/button";
 import { getLatestPosts } from "@/lib/dal/post";
-import Image from "next/image";
-import Link from "next/link";
 
 export default async function Home() {
   const posts = await getLatestPosts();
 
   return (
     <Section>
-      <Container className="max-w-screen-xl mx-auto sm:px-2 lg:px-0 grid grid-cols-10">
-        <ul className="!min-w-full  flex flex-col gap-4 col-span-7">
-          {posts.map((post, idx) => {
-            return (
-              <li
-                key={idx}
-                className="bg-card text-card-foreground w-full font-medium border rounded-md p-4 py-6"
-              >
-                <Link href={`/post/${post._id}`} className="no-underline">
-                  <div className="flex gap-4">
-                    <div className="flex flex-col gap-4">
-                      <h2 className="text-2xl line-clamp-2">{post._id}</h2>
-                      {post.user && (
-                        <div className="flex mt-auto gap-2 items-center">
-                          <Image
-                            src={post.user[0].photoURL}
-                            alt={post.user[0].displayName}
-                            width={25}
-                            height={25}
-                            className="object-cover rounded-full"
-                          />
-                          <h4 className="text-muted-foreground">
-                            {post.user[0].displayName}
-                          </h4>
-                        </div>
-                      )}
-                    </div>
-                    <Image
-                      src="/images/cat.webp"
-                      alt="cat image"
-                      width={200}
-                      height={200}
-                      className="object-cover ml-auto"
-                    />
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+      <Container className="max-w-screen-xl mx-auto gap-4 sm:px-2 lg:px-0 grid grid-cols-10">
+        {/* left side */}
+        <main className="col-span-7">
+          <Posts posts={posts} />
+        </main>
+        {/* right side */}
+
+        <aside className="col-span-3 flex">
+          <div className="flex flex-col ml-auto">
+            <div className="bg-card text-card-foreground p-4 border rounded-xl space-y-4">
+              <h4>Denese0 is a open-source blogging platform.</h4>
+              <p className="font-bold">Upcoming features:</p>
+              <ul className="ml-4">
+                {["Profile Details", "Reactions"].map((v, i) => {
+                  return (
+                    <li key={i} className="list-disc">
+                      {v}
+                    </li>
+                  );
+                })}
+              </ul>
+              <Button>Request New Feature</Button>
+            </div>
+          </div>
+        </aside>
       </Container>
     </Section>
   );
