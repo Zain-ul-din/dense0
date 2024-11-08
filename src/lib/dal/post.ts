@@ -42,6 +42,36 @@ export const getLatestPosts = async () => {
 
 export const getPostById = async (id: string): Promise<Post | null> => {
   const db = await connectMongoDB();
-  const post = await db.collection(postsCol).findOne({ _id: id as any });
-  return post as Post | null;
+  const post = await db
+    .collection(postsCol)
+    .aggregate([
+      {
+        $match: { _id: id as any } // Match the post by ID
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $project: {
+          post: "$$ROOT",
+          user: {
+            _id: 1,
+            uid: 1,
+            displayName: 1,
+            photoURL: 1
+          }
+        }
+      }
+    ])
+    .toArray();
+
+  // Since we expect only one post, return the first (or null if none found)
+  return post.length > 0
+    ? ({ ...post[0].post, user: post[0].user } as Post)
+    : null;
 };
