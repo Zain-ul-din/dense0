@@ -14,6 +14,7 @@ type Post = {
     displayName: string;
     photoURL: string;
   }[];
+  imgURL: string;
 };
 
 export default Post;

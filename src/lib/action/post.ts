@@ -35,11 +35,17 @@ export async function createPostAction(state: FormState, formData: FormData) {
     return undefined;
   }
 
-  const heading = JSON.parse(data.json)
-    .content[0].content.filter((c: any) => typeof c.text === "string")
+  const json = JSON.parse(data.json);
+
+  const heading = json.content[0].content
+    .filter((c: any) => typeof c.text === "string")
     .map((c: any) => c.text)
     .join(" ")
     .trim();
+
+  const imgURL = json.content.filter(
+    (content: any) => content.type === "image"
+  )[0].attrs.src;
 
   const nanoId = customAlphabet("qwertyuiopa1234567890sdfghjklzxcvbnm", 12);
   const slug = urlSlug(`${heading} ${nanoId()}`);
@@ -51,7 +57,8 @@ export async function createPostAction(state: FormState, formData: FormData) {
     heading: heading,
     userId: currentUser.uid,
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
+    imgURL
   });
 
   redirect(`/post/${slug}`);

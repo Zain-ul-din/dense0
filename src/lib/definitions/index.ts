@@ -34,11 +34,27 @@ export const PostFormSchema = z.object({
               .trim().length > 0
           );
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (err) {
-          console.log(err);
+        } catch (_) {
           return false;
         }
       },
       { message: "Post title is missing." }
+    )
+    .refine(
+      (v) => {
+        try {
+          const json = JSON.parse(v);
+          return (
+            json.content.some((content: any) => content.type === "image") &&
+            typeof json.content.filter(
+              (content: any) => content.type === "image"
+            )[0].attrs.src === "string"
+          );
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_) {
+          return false;
+        }
+      },
+      { message: "Image is missing." }
     )
 });
