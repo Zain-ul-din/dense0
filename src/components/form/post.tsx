@@ -27,8 +27,9 @@ export default function PostForm({ post }: { post?: Post }) {
 
   return (
     <form action={formAction}>
-      <Section>
-        <Container className="space-y-6">
+      <Section className="p-2">
+        <Container className="space-y-6 bg-card rounded-xl border">
+          <h1 className="text-xl font-medium">Create New Post</h1>
           {/* form inputs */}
           <input
             name="topics"
@@ -78,14 +79,16 @@ export default function PostForm({ post }: { post?: Post }) {
                 ))}
             </ul>
           </div>
-          <Button
-            size={"lg"}
-            variant={"outline"}
-            className="text-xl"
-            type="submit"
-          >
-            Publish
-          </Button>
+          <div className="flex">
+            <Button
+              size={"lg"}
+              variant={"outline"}
+              className="text-xl ml-auto"
+              type="submit"
+            >
+              Publish
+            </Button>
+          </div>
         </Container>
       </Section>
     </form>

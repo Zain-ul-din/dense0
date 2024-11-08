@@ -14,7 +14,7 @@ export default function Posts({ posts }: { posts: Post[] }) {
 
 const PostCard = ({ post }: { post: Post }) => {
   return (
-    <li className="bg-card text-card-foreground w-full font-medium border rounded-xl p-4 py-6">
+    <li className="bg-card text-card-foreground w-full font-medium border rounded-xl p-4">
       <Link href={`/post/${post._id}`} className="no-underline">
         <div className="flex gap-4">
           <div className="flex flex-col gap-4">
@@ -39,7 +39,7 @@ const PostCard = ({ post }: { post: Post }) => {
             alt="cat image"
             width={200}
             height={200}
-            className="object-cover ml-auto"
+            className="object-cover ml-auto rounded-md"
           />
         </div>
       </Link>

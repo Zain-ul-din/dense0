@@ -38,7 +38,7 @@ const Editor = ({
   return (
     <EditorRoot>
       <EditorContent
-        className="bg-transparent prose min-w-[100%] rounded-lg border"
+        className="bg-background prose min-w-[100%] rounded-lg border"
         immediatelyRender={false}
         extensions={extensions}
         initialContent={content}

@@ -1,4 +1,5 @@
 export const ROUTES = {
   home: "/",
-  new_post: "/new-post"
+  new_post: "/new-post",
+  join: "/join"
 };

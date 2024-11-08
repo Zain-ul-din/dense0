@@ -42,6 +42,7 @@ const SignIn = ({ children, provider, onLogin }: SignInProps) => {
       const tokenId = await user?.getIdToken();
       await signInServerSide(tokenId);
       if (onLogin) onLogin(user);
+
       setLoading(false);
     })();
   }, [user, onLogin, provider]);

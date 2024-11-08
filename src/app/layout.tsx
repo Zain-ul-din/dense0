@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/header";
+import { ROUTES } from "@/lib/constants";
+import { ShowBaseOnPathname } from "@/components/misc/show";
 
 const uncutSans = localFont({
   src: "./fonts/UncutSans.woff2",
@@ -24,7 +26,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${uncutSans.variable} antialiased`}>
         <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
-          <Header />
+          <ShowBaseOnPathname exclude={[ROUTES.join]}>
+            <Header />
+          </ShowBaseOnPathname>
           {children}
         </ThemeProvider>
       </body>
