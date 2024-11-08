@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/header";
 import { ROUTES } from "@/lib/constants";
 import { ShowBaseOnPathname } from "@/components/misc/show";
+import AuthProvider from "@/providers/auth-provider";
 
 const uncutSans = localFont({
   src: "./fonts/UncutSans.woff2",
@@ -25,12 +26,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${uncutSans.variable} antialiased`}>
-        <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
-          <ShowBaseOnPathname exclude={[ROUTES.join]}>
-            <Header />
-          </ShowBaseOnPathname>
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
+            <ShowBaseOnPathname exclude={[ROUTES.join]}>
+              <Header />
+            </ShowBaseOnPathname>
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

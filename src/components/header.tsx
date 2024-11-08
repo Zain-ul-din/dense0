@@ -23,7 +23,9 @@ export default function Header() {
           </Link>
           <ThemeToggle />
           <SignOut>
-            {(signOut) => <Button onClick={signOut}>Sign out</Button>}
+            {(signOut, [user]) =>
+              user ? <Button onClick={signOut}>Sign out</Button> : <></>
+            }
           </SignOut>
         </nav>
       </div>
