@@ -13,6 +13,7 @@ import Text from "@tiptap/extension-text";
 import { Container, Section } from "@/components/craft";
 import StarterKit from "@tiptap/starter-kit";
 import TiptapImage from "@tiptap/extension-image";
+import { cn } from "@/lib/utils";
 
 export const dynamicParams = true;
 
@@ -28,27 +29,54 @@ export default async function Page({
     notFound();
   }
 
+  const json = JSON.parse(post.json as any as string);
+
+  const headingContent = {
+    ...json,
+    content: [json.content[0]]
+  };
+
+  const remainingContent = {
+    ...json,
+    content: json.content.slice(1)
+  };
+
   return (
     <Section>
       <Container>
-        <div
-          className="prose md:prose-lg prose-img:w-full prose-img:object-cover prose-img:object-bottom prose-img:rounded-sm dark:prose-pre:bg-transparent dark:prose-pre:border dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-[950px] mx-auto"
-          dangerouslySetInnerHTML={{
-            __html: generateHTML(JSON.parse(post.json as any as string), [
-              Bold,
-              BulletList,
-              Document,
-              Heading,
-              Link,
-              Paragraph,
-              ListItem,
-              Text,
-              StarterKit,
-              TiptapImage
-            ])
-          }}
-        />
+        <article
+          className={cn(
+            "prose md:prose-lg prose-img:w-full prose-img:object-cover",
+            "prose-img:object-bottom prose-img:rounded-sm dark:prose-pre:bg-transparent",
+            "dark:prose-pre:border dark:prose-invert prose-headings:font-title font-default",
+            "focus:outline-none max-w-[950px] mx-auto"
+          )}
+        >
+          <Content>{headingContent}</Content>
+          <Content>{remainingContent}</Content>
+        </article>
       </Container>
     </Section>
   );
 }
+
+const Content = ({ children }: { children: any }) => {
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: generateHTML(children, [
+          Bold,
+          BulletList,
+          Document,
+          Heading,
+          Link,
+          Paragraph,
+          ListItem,
+          Text,
+          StarterKit,
+          TiptapImage
+        ])
+      }}
+    />
+  );
+};
