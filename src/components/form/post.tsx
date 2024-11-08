@@ -3,7 +3,7 @@
 import { Container, Section } from "@/components/craft";
 import Editor from "@/components/editor";
 import { Button } from "@/components/ui/button";
-import { createPostAction } from "@/lib/action/post";
+import { createPostAction, updatePostAction } from "@/lib/action/post";
 import Post from "@/lib/types/post";
 import { TagInput, Tag } from "emblor";
 import { JSONContent } from "novel";
@@ -16,7 +16,10 @@ export default function PostForm({ post }: { post?: Post }) {
     post ? post.json : undefined
   );
 
-  const [formState, formAction] = useActionState(createPostAction, undefined);
+  const [formState, formAction] = useActionState(
+    post ? updatePostAction : createPostAction,
+    undefined
+  );
 
   useEffect(() => {
     if (!post) return;
@@ -29,7 +32,12 @@ export default function PostForm({ post }: { post?: Post }) {
     <form action={formAction}>
       <Section className="p-2">
         <Container className="space-y-6 bg-card rounded-xl border">
-          <h1 className="text-xl font-medium">Create New Post</h1>
+          <h1 className="text-xl font-medium">
+            {post ? "Edit Your Post" : "Create New Post"}
+          </h1>
+
+          {post && <input name="id" value={post._id} hidden readOnly />}
+
           {/* form inputs */}
           <input
             name="topics"

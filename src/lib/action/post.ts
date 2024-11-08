@@ -35,17 +35,7 @@ export async function createPostAction(state: FormState, formData: FormData) {
     return undefined;
   }
 
-  const json = JSON.parse(data.json);
-
-  const heading = json.content[0].content
-    .filter((c: any) => typeof c.text === "string")
-    .map((c: any) => c.text)
-    .join(" ")
-    .trim();
-
-  const imgURL = json.content.filter(
-    (content: any) => content.type === "image"
-  )[0].attrs.src;
+  const { heading, imgURL } = extractMetaDataFrom(JSON.parse(data.json));
 
   const nanoId = customAlphabet("qwertyuiopa1234567890sdfghjklzxcvbnm", 12);
   const slug = urlSlug(`${heading} ${nanoId()}`);
@@ -63,3 +53,47 @@ export async function createPostAction(state: FormState, formData: FormData) {
 
   redirect(`/post/${slug}`);
 }
+
+export async function updatePostAction(state: FormState, formData: FormData) {
+  const validateFields = PostFormSchema.safeParse({
+    topics: formData.get("topics"),
+    json: formData.get("json"),
+    id: formData.get("id")
+  });
+
+  if (!validateFields.success) {
+    return {
+      errors: validateFields.error.flatten().fieldErrors
+    };
+  }
+
+  const { currentUser } = await getAuthenticatedAppForUser();
+  const { data } = validateFields;
+
+  if (!currentUser) {
+    return undefined;
+  }
+
+  console.log(data);
+
+  const { heading, imgURL } = extractMetaDataFrom(JSON.parse(data.json));
+
+  console.log(heading, imgURL);
+}
+
+const extractMetaDataFrom = (json: any) => {
+  const heading = json.content[0].content
+    .filter((c: any) => typeof c.text === "string")
+    .map((c: any) => c.text)
+    .join(" ")
+    .trim();
+
+  const imgURL = json.content.filter(
+    (content: any) => content.type === "image"
+  )[0].attrs.src;
+
+  return {
+    heading,
+    imgURL
+  };
+};

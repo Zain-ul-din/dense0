@@ -6,8 +6,19 @@ import { Button } from "./ui/button";
 import { Pencil } from "lucide-react";
 import { ROUTES } from "@/lib/constants";
 import SignOut from "./signout";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebase } from "@/lib/firebase";
+import Image from "next/image";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "./ui/dropdown-menu";
 
 export default function Header() {
+  const [user] = useAuthState(firebase.auth);
+
   return (
     <header className="px-4 py-4 border-b">
       <div className="max-w-screen-xl flex items-center mx-auto">
@@ -22,11 +33,33 @@ export default function Header() {
             </Button>
           </Link>
           <ThemeToggle />
-          <SignOut>
-            {(signOut, [user]) =>
-              user ? <Button onClick={signOut}>Sign out</Button> : <></>
-            }
-          </SignOut>
+          {user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Image
+                  src={`${user?.photoURL}`}
+                  alt={user.displayName || ""}
+                  width={35}
+                  height={35}
+                  className="object-fill min-w-[35px] min-h-[35px] rounded-[50%] border"
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem disabled>Profile</DropdownMenuItem>
+
+                <SignOut>
+                  {(signOut) => (
+                    <DropdownMenuItem
+                      className="text-red-500 focus:text-red-400"
+                      onClick={signOut}
+                    >
+                      Sign out
+                    </DropdownMenuItem>
+                  )}
+                </SignOut>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </nav>
       </div>
     </header>

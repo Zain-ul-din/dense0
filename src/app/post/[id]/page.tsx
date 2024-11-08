@@ -14,7 +14,7 @@ import { Container, Section } from "@/components/craft";
 import StarterKit from "@tiptap/starter-kit";
 import TiptapImage from "@tiptap/extension-image";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import BlogNavigation from "@/components/blog/nav";
 
 export const dynamicParams = true;
 
@@ -54,26 +54,7 @@ export default async function Page({
           )}
         >
           <Content>{headingContent}</Content>
-          {post.user && (
-            <section className="border-b !not-prose not-prose pb-4 ">
-              <div className="flex gap-4 items-center">
-                <Image
-                  src={`${post.user[0].photoURL}`}
-                  alt={post.user[0].displayName}
-                  width={35}
-                  height={35}
-                  className="rounded-full"
-                />
-
-                <div className="-space-y-1">
-                  <h3 className="font-medium">{post.user[0].displayName}</h3>
-                  <div className="text-xs text-muted-foreground">
-                    {new Date(post.updatedAt).toDateString()}
-                  </div>
-                </div>
-              </div>
-            </section>
-          )}
+          <BlogNavigation post={post} />
           <Content>{remainingContent}</Content>
         </article>
       </Container>

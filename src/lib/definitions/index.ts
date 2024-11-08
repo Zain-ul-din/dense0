@@ -56,5 +56,6 @@ export const PostFormSchema = z.object({
         }
       },
       { message: "Image is missing." }
-    )
+    ),
+  id: z.string().optional()
 });
