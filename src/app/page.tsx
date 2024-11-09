@@ -33,7 +33,7 @@ export default async function Home() {
             <div className="bg-card text-card-foreground p-4 border rounded-xl space-y-4">
               <h4>
                 Denese0 is a open-source blogging platform. We are currently in
-                beta stay tunned from more.
+                beta stay tunned for more.
               </h4>
               <p className="font-bold">Upcoming features:</p>
               <ul className="ml-4">
