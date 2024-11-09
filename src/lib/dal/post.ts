@@ -9,7 +9,10 @@ export const createPost = async (post: Post) => {
 };
 
 export const updatePost = async (
-  post: Pick<Post, "_id" | "json" | "topics" | "imgURL" | "heading">,
+  post: Pick<
+    Post,
+    "_id" | "json" | "topics" | "imgURL" | "heading" | "description"
+  >,
   userId: string
 ) => {
   const db = await connectMongoDB();
@@ -60,6 +63,9 @@ export const getLatestPosts = async () => {
           userId: 1,
           heading: 1,
           imgURL: 1,
+          description: 1,
+          updatedAt: 1,
+          createdAt: 1,
           user: {
             _id: 1,
             uid: 1,

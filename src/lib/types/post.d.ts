@@ -8,6 +8,7 @@ type Post = {
   heading: string;
   createdAt: string;
   updatedAt: string;
+  description: string;
   user?: {
     _id: string;
     uid: string;

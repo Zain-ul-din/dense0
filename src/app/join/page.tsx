@@ -20,6 +20,7 @@ export default function JoinPage() {
                     disabled={!!(loading || user)}
                     size={"lg"}
                     variant={"outline"}
+                    loading={loading}
                   >
                     <FaGithub />
                     {user
@@ -38,6 +39,7 @@ export default function JoinPage() {
                     disabled={!!(loading || user)}
                     size={"lg"}
                     variant={"outline"}
+                    loading={loading}
                   >
                     <FaGoogle />
                     {user

@@ -37,7 +37,9 @@ export async function createPostAction(state: FormState, formData: FormData) {
     return undefined;
   }
 
-  const { heading, imgURL } = extractMetaDataFrom(JSON.parse(data.json));
+  const { heading, imgURL, description } = extractMetaDataFrom(
+    JSON.parse(data.json)
+  );
 
   const nanoId = customAlphabet("qwertyuiopa1234567890sdfghjklzxcvbnm", 12);
   const slug = urlSlug(`${heading} ${nanoId()}`);
@@ -50,7 +52,8 @@ export async function createPostAction(state: FormState, formData: FormData) {
     userId: currentUser.uid,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    imgURL
+    imgURL,
+    description
   });
 
   revalidatePath("/");
@@ -77,7 +80,9 @@ export async function updatePostAction(state: FormState, formData: FormData) {
     return undefined;
   }
 
-  const { heading, imgURL } = extractMetaDataFrom(JSON.parse(data.json));
+  const { heading, imgURL, description } = extractMetaDataFrom(
+    JSON.parse(data.json)
+  );
 
   await updatePost(
     {
@@ -85,7 +90,8 @@ export async function updatePostAction(state: FormState, formData: FormData) {
       json: data.json as any,
       topics: data.topics.split(",").map((v) => v.trim()),
       heading,
-      imgURL
+      imgURL,
+      description
     },
     currentUser.uid
   );
@@ -117,8 +123,16 @@ const extractMetaDataFrom = (json: any) => {
     (content: any) => content.type === "image"
   )[0].attrs.src;
 
+  const description = json.content
+    .filter((content: any) => content.type === "paragraph")[0]
+    .content.filter((v: any) => typeof v.text === "string")
+    .map((v: any) => v.text)
+    .join(" ")
+    .trim();
+
   return {
     heading,
-    imgURL
+    imgURL,
+    description
   };
 };

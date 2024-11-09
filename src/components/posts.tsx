@@ -19,9 +19,14 @@ const PostCard = ({ post }: { post: Post }) => {
   return (
     <li className="bg-card text-card-foreground w-full font-medium border rounded-xl p-4">
       <Link href={`/post/${post._id}`} className="no-underline">
-        <div className="flex gap-4">
+        <div className="flex gap-4 md:flex-row flex-col-reverse">
           <div className="flex flex-col gap-4 py-2">
-            <h2 className="text-2xl line-clamp-2">{post.heading}</h2>
+            <div className="space-y-2">
+              <h2 className="text-2xl line-clamp-2">{post.heading}</h2>
+              <p className="text-muted-foreground line-clamp-3">
+                {post.description || ""}
+              </p>
+            </div>
             {post.user && (
               <div className="flex mt-auto gap-2 items-center">
                 <Image
@@ -43,7 +48,7 @@ const PostCard = ({ post }: { post: Post }) => {
             alt="cat image"
             width={150}
             height={150}
-            className="object-cover ml-auto rounded-md max-w-[150px] max-h-[150px]"
+            className="object-cover ml-auto min-w-full min-h-full rounded-md md:min-w-[150px] md:min-h-[150px] md:max-w-[150px] md:max-h-[150px]"
           />
         </div>
       </Link>

@@ -56,6 +56,23 @@ export const PostFormSchema = z.object({
         }
       },
       { message: "Image is missing." }
+    )
+    .refine(
+      (v) => {
+        try {
+          const json = JSON.parse(v);
+          return (
+            json.content.some((content: any) => content.type === "paragraph") &&
+            json.content
+              .filter((content: any) => content.type === "paragraph")[0]
+              .content.every((node: any) => typeof node.text === "string")
+          );
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_) {
+          return false;
+        }
+      },
+      { message: "A post must have a paragraph." }
     ),
   id: z.string().optional()
 });
