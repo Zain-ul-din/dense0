@@ -31,7 +31,10 @@ export default async function Home() {
         <aside className="col-span-3 flex max-md:hidden">
           <div className="flex flex-col ml-auto">
             <div className="bg-card text-card-foreground p-4 border rounded-xl space-y-4">
-              <h4>Denese0 is a open-source blogging platform.</h4>
+              <h4>
+                Denese0 is a open-source blogging platform. We are currently in
+                beta stay tunned from more.
+              </h4>
               <p className="font-bold">Upcoming features:</p>
               <ul className="ml-4">
                 {["Profile Details", "Reactions"].map((v, i) => {
