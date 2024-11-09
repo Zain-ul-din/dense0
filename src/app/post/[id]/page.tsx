@@ -15,8 +15,18 @@ import StarterKit from "@tiptap/starter-kit";
 import TiptapImage from "@tiptap/extension-image";
 import { cn } from "@/lib/utils";
 import BlogNavigation from "@/components/blog/nav";
+import { unstable_cache } from "next/cache";
 
 export const dynamicParams = true;
+
+const getPostFromCache = unstable_cache(
+  async (id: string) => {
+    const post = await getPostById(id);
+    return post;
+  },
+  [],
+  {}
+);
 
 export default async function Page({
   params
@@ -24,7 +34,7 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const post = await getPostById(decodeURIComponent(id));
+  const post = await getPostFromCache(decodeURIComponent(id));
 
   if (!post) {
     notFound();
