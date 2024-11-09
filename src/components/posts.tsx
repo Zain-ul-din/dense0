@@ -23,7 +23,7 @@ const PostCard = ({ post }: { post: Post }) => {
           <div className="flex flex-col gap-4 py-2">
             <div className="space-y-2">
               <h2 className="text-2xl line-clamp-2">{post.heading}</h2>
-              <p className="text-muted-foreground line-clamp-3">
+              <p className="text-muted-foreground line-clamp-2">
                 {post.description || ""}
               </p>
             </div>
