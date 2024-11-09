@@ -2,9 +2,21 @@ import { Container, Section } from "@/components/craft";
 import Posts from "@/components/posts";
 import { Button } from "@/components/ui/button";
 import { getLatestPosts } from "@/lib/dal/post";
+import { unstable_cache } from "next/cache";
+
+export const revalidate = 60;
+
+const getPostsFromCache = unstable_cache(
+  async () => {
+    const posts = await getLatestPosts();
+    return posts;
+  },
+  [],
+  { revalidate: 3600 }
+);
 
 export default async function Home() {
-  const posts = await getLatestPosts();
+  const posts = await getPostsFromCache();
 
   return (
     <Section>

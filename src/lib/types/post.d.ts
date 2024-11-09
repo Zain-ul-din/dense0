@@ -15,6 +15,7 @@ type Post = {
     photoURL: string;
   }[];
   imgURL: string;
+  deleted?: boolean;
 };
 
 export default Post;

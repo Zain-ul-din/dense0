@@ -16,7 +16,7 @@ export default function PostForm({ post }: { post?: Post }) {
     post ? post.json : undefined
   );
 
-  const [formState, formAction] = useActionState(
+  const [formState, formAction, loading] = useActionState(
     post ? updatePostAction : createPostAction,
     undefined
   );
@@ -93,6 +93,7 @@ export default function PostForm({ post }: { post?: Post }) {
               variant={"outline"}
               className="text-xl ml-auto"
               type="submit"
+              loading={loading}
             >
               Publish
             </Button>

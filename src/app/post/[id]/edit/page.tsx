@@ -1,6 +1,8 @@
 import PostForm from "@/components/form/post";
+import { ROUTES } from "@/lib/constants";
 import { getPostById } from "@/lib/dal/post";
-import { notFound } from "next/navigation";
+import { getAuthenticatedAppForUser } from "@/lib/firebase/server";
+import { notFound, redirect } from "next/navigation";
 
 export default async function EditPage({
   params
@@ -12,6 +14,12 @@ export default async function EditPage({
 
   if (!post) {
     return notFound();
+  }
+
+  const { currentUser } = await getAuthenticatedAppForUser();
+
+  if (currentUser?.uid !== post.userId) {
+    return redirect(`${ROUTES.post}/${post._id}`);
   }
 
   return (

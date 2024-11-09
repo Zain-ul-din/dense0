@@ -1,11 +1,13 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { createPost } from "../dal/post";
+import { createPost, deletePost, updatePost } from "../dal/post";
 import { PostFormSchema } from "../definitions";
 import { getAuthenticatedAppForUser } from "../firebase/server";
 import urlSlug from "url-slug";
 import { customAlphabet } from "nanoid";
+import { ROUTES } from "../constants";
+import { revalidatePath } from "next/cache";
 
 type FormState =
   | {
@@ -51,7 +53,8 @@ export async function createPostAction(state: FormState, formData: FormData) {
     imgURL
   });
 
-  redirect(`/post/${slug}`);
+  revalidatePath("/");
+  redirect(`${ROUTES.post}/${slug}`);
 }
 
 export async function updatePostAction(state: FormState, formData: FormData) {
@@ -74,11 +77,33 @@ export async function updatePostAction(state: FormState, formData: FormData) {
     return undefined;
   }
 
-  console.log(data);
-
   const { heading, imgURL } = extractMetaDataFrom(JSON.parse(data.json));
 
-  console.log(heading, imgURL);
+  await updatePost(
+    {
+      _id: data.id as string,
+      json: data.json as any,
+      topics: data.topics.split(",").map((v) => v.trim()),
+      heading,
+      imgURL
+    },
+    currentUser.uid
+  );
+
+  revalidatePath(`/`);
+  revalidatePath(`${ROUTES.post}/${data.id}`);
+  redirect(`${ROUTES.post}/${data.id}`);
+}
+
+export async function deletePostAction(state: any, formData: FormData) {
+  const id = formData.get("id")?.toString();
+  const { currentUser } = await getAuthenticatedAppForUser();
+  console.log("id: ", id);
+  if (!currentUser) return undefined;
+  await deletePost(id as string, currentUser?.uid);
+  revalidatePath(`${ROUTES.post}/${id}`);
+  revalidatePath(`/`);
+  redirect(`/`);
 }
 
 const extractMetaDataFrom = (json: any) => {
