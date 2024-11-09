@@ -16,6 +16,7 @@ import TiptapImage from "@tiptap/extension-image";
 import { cn } from "@/lib/utils";
 import BlogNavigation from "@/components/blog/nav";
 import { unstable_cache } from "next/cache";
+import { Metadata } from "next";
 
 export const dynamicParams = true;
 
@@ -27,6 +28,24 @@ const getPostFromCache = unstable_cache(
   [],
   {}
 );
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const post = await getPostFromCache(decodeURIComponent(id));
+  if (!post) return {};
+
+  return {
+    title: post.heading,
+    description: post.description.slice(0, 150) || "",
+    openGraph: {
+      images: `${post.imgURL}`
+    }
+  };
+}
 
 export default async function Page({
   params
