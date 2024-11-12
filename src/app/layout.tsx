@@ -26,10 +26,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${uncutSans.variable} antialiased`}>
+      <body
+        className={`${uncutSans.variable} antialiased`}
+        suppressHydrationWarning
+      >
         <AuthProvider>
           <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
-            <ShowBaseOnPathname exclude={[ROUTES.join]}>
+            <ShowBaseOnPathname exclude={[ROUTES.join, ROUTES.home]}>
               <Header />
             </ShowBaseOnPathname>
             {children}

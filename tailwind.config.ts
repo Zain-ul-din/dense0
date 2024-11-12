@@ -60,9 +60,74 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)"
       }
+    },
+    animation: {
+      "d0-fade-in": "d0-fade-in 3s ease-in-out forwards",
+      "d0-title": "d0-title 3s ease-out forwards",
+      "d0-fade-left": "d0-fade-left 3s ease-in-out forwards",
+      "d0-fade-right": "d0-fade-right 3s ease-in-out forwards"
+    },
+    keyframes: {
+      "d0-fade-in": {
+        "0%": {
+          opacity: "0%"
+        },
+        "75%": {
+          opacity: "0%"
+        },
+        "100%": {
+          opacity: "100%"
+        }
+      },
+      "d0-fade-left": {
+        "0%": {
+          transform: "translateX(100%)",
+          opacity: "0%"
+        },
+
+        "30%": {
+          transform: "translateX(0%)",
+          opacity: "100%"
+        },
+        "100%": {
+          opacity: "0%"
+        }
+      },
+      "d0-fade-right": {
+        "0%": {
+          transform: "translateX(-100%)",
+          opacity: "0%"
+        },
+
+        "30%": {
+          transform: "translateX(0%)",
+          opacity: "100%"
+        },
+        "100%": {
+          opacity: "0%"
+        }
+      },
+      "d0-title": {
+        "0%": {
+          "line-height": "0%",
+          "letter-spacing": "0.25em",
+          opacity: "0"
+        },
+        "25%": {
+          "line-height": "0%",
+          opacity: "0%"
+        },
+        "80%": {
+          opacity: "100%"
+        },
+
+        "100%": {
+          "line-height": "100%",
+          opacity: "100%"
+        }
+      }
     }
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")]
+  plugins: [require("@tailwindcss/typography"), require("tailwindcss-animate")]
 };
-
 export default config;

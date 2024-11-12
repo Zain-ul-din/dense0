@@ -1,58 +1,54 @@
-import { Container, Section } from "@/components/craft";
-import Posts from "@/components/posts";
-import { Button } from "@/components/ui/button";
-import { getLatestPosts } from "@/lib/dal/post";
-import { unstable_cache } from "next/cache";
+import { TextureButton } from "@/components/ui/texture-button";
+import { ROUTES } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import React from "react";
+import { FaGithub } from "react-icons/fa";
+import Balancer from "react-wrap-balancer";
 
-export const revalidate = 60;
-
-const getPostsFromCache = unstable_cache(
-  async () => {
-    const posts = await getLatestPosts();
-    return posts;
-  },
-  [],
-  { revalidate: 3600 }
-);
-
-export default async function Home() {
-  const posts = await getPostsFromCache();
-
+export default function Home() {
   return (
-    <Section>
-      <Container className="max-w-screen-xl mx-auto gap-4 sm:px-2 lg:px-0 grid md:grid-cols-10">
-        {/* left side */}
-        <main className="md:col-span-7">
-          <Posts posts={posts} />
-        </main>
-        {/* right side */}
+    <div
+      className={cn(
+        "flex flex-col items-center justify-center w-screen h-screen overflow-hidden",
+        "bg-gradient-to-tl from-background via-zinc-600/10 to-background"
+      )}
+    >
+      <nav className="my-12 !animate-d0-fade-in">
+        <Link href={ROUTES.blogs}>
+          <TextureButton variant="primary" className="font-medium text-xl">
+            JOIN DENSE0
+            <ArrowRight className="w-4 h-4 animate-out" />
+          </TextureButton>
+        </Link>
+      </nav>
+      <div className="hidden w-screen h-px !animate-d0-glow md:block !animate-d0-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
 
-        <aside className="col-span-3 flex max-md:hidden">
-          <div className="flex flex-col ml-auto">
-            <div className="bg-card text-card-foreground p-4 border rounded-xl space-y-4">
-              <h4>
-                Denese0 is a open-source blogging platform. We are currently in
-                beta stay tunned for more.
-              </h4>
-              <p className="font-bold">Upcoming features:</p>
-              <ul className="ml-4">
-                {["Profile Details", "Reactions"].map((v, i) => {
-                  return (
-                    <li key={i} className="list-disc">
-                      {v}
-                    </li>
-                  );
-                })}
-              </ul>
+      {/* <Particles
+        className="absolute inset-0 -z-10 !animate-d0-fade-in"
+        quantity={100}
+      /> */}
+      <h1 className="z-10 text-transparent duration-1000 bg-white cursor-default text-edge-outline !animate-d0-title font-display text-6xl md:text-9xl whitespace-nowrap bg-clip-text ">
+        DENSE0
+      </h1>
 
-              <Link href={`https://github.com/Zain-ul-din/dense0/issues`}>
-                <Button className="mt-4">Request New Feature</Button>
-              </Link>
-            </div>
-          </div>
-        </aside>
-      </Container>
-    </Section>
+      <div className="hidden w-screen h-px !animate-d0-glow md:block !animate-d0-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
+
+      <div className="my-12 text-center !animate-d0-fade-in">
+        <h2 className="text-sm md:text-lg text-muted-foreground">
+          <Balancer>
+            Dense0 is an open-source blogging platform that empowers writers and
+            developers to create, share, and manage content seamlessly.
+          </Balancer>
+        </h2>
+      </div>
+
+      <div className="rounded-full fixed bottom-6 right-6 md:right-8 md:bottom-8">
+        <Link href={`https://github.com/Zain-ul-din/dense0`}>
+          <FaGithub className="w-8 h-8" />
+        </Link>
+      </div>
+    </div>
   );
 }

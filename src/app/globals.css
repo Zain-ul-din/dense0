@@ -106,7 +106,12 @@ body {
     @apply bg-background text-foreground;
     min-height: 100svh;
   }
+
   .icon {
     @apply w-4 h-4;
+  }
+
+  .text-edge-outline {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
   }
 }
