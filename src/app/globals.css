@@ -103,7 +103,7 @@ body {
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-tl from-background via-zinc-600/10 to-background text-foreground;
     min-height: 100svh;
   }
 
