@@ -16,7 +16,10 @@ const uncutSans = localFont({
 export const metadata: Metadata = {
   title: "Dense0",
   description:
-    "Dense0 is an open-source blogging platform that empowers writers and developers to create, share, and manage content seamlessly."
+    "Dense0 is an open-source blogging platform that empowers writers and developers to create, share, and manage content seamlessly.",
+  openGraph: {
+    images: ["/images/social-card.png"]
+  }
 };
 
 export default function RootLayout({
