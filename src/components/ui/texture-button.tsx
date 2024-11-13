@@ -10,7 +10,7 @@ const buttonVariantsOuter = cva("", {
   variants: {
     variant: {
       primary:
-        "w-full border border-[1px] dark:border-[2px] border-black/10 dark:border-black bg-gradient-to-b from-black/70 to-black dark:from-white dark:to-white/80 p-[1px] transition duration-300 ease-in-out ",
+        "w-full  bg-gradient-to-b from-black/60 to-black dark:from-white dark:to-white/60 p-[2px] transition duration-300 ease-in-out ",
       accent:
         "w-full border-[1px] dark:border-[2px] border-black/10 dark:border-neutral-950 bg-gradient-to-b from-indigo-300/90 to-indigo-500 dark:from-indigo-200/70 dark:to-indigo-500 p-[1px] transition duration-300 ease-in-out ",
       destructive:
