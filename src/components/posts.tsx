@@ -37,7 +37,7 @@ const PostCard = ({ post }: { post: Post }) => {
                   className="object-cover rounded-full"
                   quality={100}
                 />
-                <h4 className="text-muted-foreground">
+                <h4 className="text-muted-foreground font-medium">
                   {post.user[0].displayName}
                 </h4>
               </div>
