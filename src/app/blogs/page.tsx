@@ -5,7 +5,7 @@ import { getLatestPosts } from "@/lib/dal/post";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
 
-export const revalidate = 60;
+export const revalidate = 30;
 
 const getPostsFromCache = unstable_cache(
   async () => {
@@ -13,7 +13,7 @@ const getPostsFromCache = unstable_cache(
     return posts;
   },
   [],
-  { revalidate: 3600 }
+  { revalidate: 30 }
 );
 
 export default async function BlogsPage() {
