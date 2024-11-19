@@ -38,7 +38,7 @@ const Editor = ({
   return (
     <EditorRoot>
       <EditorContent
-        className="bg-background prose min-w-[100%] rounded-lg border"
+        className="bg-background prose prose-pre:text-foreground dark:prose-pre:text-foreground dark:prose-invert min-w-[100%] rounded-lg border"
         immediatelyRender={false}
         extensions={extensions}
         initialContent={content}
@@ -54,7 +54,7 @@ const Editor = ({
           handleDrop: (view: any, event: any, _slice: any, moved: boolean) =>
             handleImageDrop(view, event, moved, uploadFn),
           attributes: {
-            class: `prose prose-lg  dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`
+            class: `prose prose-lg  dark:prose-invert prose-headings:font-title font-default  focus:outline-none max-w-full`
           }
         }}
         editable
