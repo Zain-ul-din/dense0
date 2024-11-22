@@ -109,7 +109,7 @@ export async function deletePostAction(state: any, formData: FormData) {
   await deletePost(id as string, currentUser?.uid);
   revalidatePath(`${ROUTES.post}/${id}`);
   revalidatePath(`/`);
-  redirect(`/`);
+  redirect(`/blogs`);
 }
 
 const extractMetaDataFrom = (json: any) => {
