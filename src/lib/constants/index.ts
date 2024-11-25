@@ -5,3 +5,5 @@ export const ROUTES = {
   post: "/post",
   blogs: "/blogs"
 };
+
+export const BASE_URL = "https://dense0.vercel.app";
