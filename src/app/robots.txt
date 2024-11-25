@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://dense0.vercel.app/sitemap.xml
