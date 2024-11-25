@@ -17,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   );
 
-  // TODO: find a way to map all the post later.
+  // TODO: find a way to map all the posts later.
   const blogsPages: MetadataRoute.Sitemap = (await getLatestPosts()).map(
     (post) => ({
       url: fullURL(`${ROUTES.post}/${post._id}`),
